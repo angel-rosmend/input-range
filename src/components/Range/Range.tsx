@@ -1,9 +1,16 @@
 "use client";
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import { RangeMode, RangeProps } from "@/types/range";
 import { RangeHandle } from "./RangeHandle";
+import { RangeLabel } from "./RangeLabel";
 import styles from "./Range.module.css";
-import { formatCurrency, formatPercentage } from "@/utils/range";
+
 
 export function Range(props: RangeProps) {
   const { mode, onChange } = props;
@@ -30,20 +37,15 @@ export function Range(props: RangeProps) {
     if (editActive !== "max") setMaxInputValue(String(currentMax));
   }, [currentMax, editActive]);
 
-  const formatLabel = useMemo(
-    () => (mode === RangeMode.Fixed ? formatCurrency : (v: number) => `${v}€`),
-    [mode],
-  );
-
   const toPercent = useCallback(
     (value: number): number => {
       if (mode === RangeMode.Fixed) {
-        const index = values.indexOf(value);
-        return (index / (values.length - 1)) * 100;
+        const idx = values.indexOf(value);
+        return (idx / (values.length - 1)) * 100;
       }
       return ((value - initialMin) / (initialMax - initialMin)) * 100;
     },
-    [mode, values, initialMin, initialMax],
+    [mode, values, initialMin, initialMax]
   );
 
   const getValueFromPosition = useCallback(
@@ -52,7 +54,7 @@ export function Range(props: RangeProps) {
       const rect = trackRef.current.getBoundingClientRect();
       const pct = Math.max(
         0,
-        Math.min(100, ((clientX - rect.left) / rect.width) * 100),
+        Math.min(100, ((clientX - rect.left) / rect.width) * 100)
       );
 
       if (mode === RangeMode.Fixed) {
@@ -62,7 +64,7 @@ export function Range(props: RangeProps) {
 
       return Math.round(initialMin + (pct / 100) * (initialMax - initialMin));
     },
-    [mode, values, initialMin, initialMax],
+    [mode, values, initialMin, initialMax]
   );
 
   const handleMove = useCallback(
@@ -80,12 +82,12 @@ export function Range(props: RangeProps) {
         onChange?.(currentMin, clamped);
       }
     },
-    [isDragging, getValueFromPosition, currentMin, currentMax, onChange],
+    [isDragging, getValueFromPosition, currentMin, currentMax, onChange]
   );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => handleMove(e.clientX),
-    [handleMove],
+    [handleMove]
   );
 
   const handleTouchMove = useCallback(
@@ -95,7 +97,7 @@ export function Range(props: RangeProps) {
         handleMove(e.touches[0].clientX);
       }
     },
-    [handleMove],
+    [handleMove]
   );
 
   const handleEnd = useCallback(() => setIsDragging(null), []);
@@ -105,7 +107,7 @@ export function Range(props: RangeProps) {
       e.preventDefault();
       setIsDragging("min");
     },
-    [],
+    []
   );
 
   const handleMaxDragStart = useCallback(
@@ -113,7 +115,7 @@ export function Range(props: RangeProps) {
       e.preventDefault();
       setIsDragging("max");
     },
-    [],
+    []
   );
 
   useEffect(() => {
@@ -132,22 +134,47 @@ export function Range(props: RangeProps) {
 
   const minPercent = useMemo(
     () => toPercent(currentMin),
-    [toPercent, currentMin],
+    [toPercent, currentMin]
   );
   const maxPercent = useMemo(
     () => toPercent(currentMax),
-    [toPercent, currentMax],
+    [toPercent, currentMax]
   );
+
+  const handleMinLabelConfirm = () => {
+    const parsed = parseFloat(minInputValue);
+    if (!isNaN(parsed)) {
+      setCurrentMin(Math.max(initialMin, Math.min(parsed, currentMax)));
+    }
+    setEditActive(null);
+  };
+
+  const handleMaxLabelConfirm = () => {
+    const parsed = parseFloat(maxInputValue);
+    if (!isNaN(parsed)) {
+      setCurrentMax(Math.min(initialMax, Math.max(parsed, currentMin)));
+    }
+    setEditActive(null);
+  };
+
+  const isEditable = mode === RangeMode.Normal;
 
   return (
     <div className={styles.container}>
-      <span
-        className={styles.label}
-        onClick={()=> null /*TODO trigger edit*/ }
-      >
-        {formatLabel(currentMin)}
-      </span>
+      <RangeLabel
+        mode={mode}
+        value={currentMin}
+        isEditable={isEditable}
+        isEditing={editActive === "min"}
+        inputValue={minInputValue}
+        onInputChange={(e) => setMinInputValue(e.target.value)}
+        onConfirm={handleMinLabelConfirm}
+        onCancel={() => setEditActive(null)}
+        onEditStart={() => setEditActive("min")}
+      />
+
       <div className={styles.track} ref={trackRef}>
+        
         <RangeHandle
           percent={minPercent}
           onDragStart={handleMinDragStart}
@@ -159,8 +186,8 @@ export function Range(props: RangeProps) {
         <div
           className={styles.activeRange}
           style={{
-            left: formatPercentage(minPercent),
-            width: formatPercentage(maxPercent - minPercent),
+            left: `${minPercent}%`,
+            width: `${maxPercent - minPercent}%`,
           }}
         />
         <RangeHandle
@@ -172,12 +199,18 @@ export function Range(props: RangeProps) {
           ariaValueMax={initialMax}
         />
       </div>
-      <span
-        className={styles.label}
-        onClick={()=> null /*TODO trigger edit*/ }
-      >
-        {formatLabel(currentMax)}
-      </span>
+
+      <RangeLabel
+        mode={mode}
+        value={currentMax}
+        isEditable={isEditable}
+        isEditing={editActive === "max"}
+        inputValue={maxInputValue}
+        onInputChange={(e) => setMaxInputValue(e.target.value)}
+        onConfirm={handleMaxLabelConfirm}
+        onCancel={() => setEditActive(null)}
+        onEditStart={() => setEditActive("max")}
+      />
     </div>
   );
 }
