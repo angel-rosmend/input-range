@@ -1,8 +1,11 @@
 .container {
   width: 100%;
   height: fit-content;
-  border-radius: 2px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
   padding: 24px;
+  user-select: none;
 }
 
 .track {
@@ -11,4 +14,72 @@
   height: 4px;
   background-color: #aaa;
   border-radius: 2px;
+  cursor: pointer;
+}
+
+.activeRange {
+  position: absolute;
+  height: 100%;
+  background-color: black;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.dragHandle {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  transition: transform 0.1s ease;
+  z-index: 2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.dragHandle:hover {
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  min-width: 56px;
+  text-align: center;
+}
+
+.labelEditable {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  min-width: 56px;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 1px dashed #999;
+}
+
+.labelEditable:hover {
+  color: #000;
+  border-bottom-color: #333;
+}
+
+.labelInput {
+  width: 72px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 2px 4px;
+  outline: none;
 }

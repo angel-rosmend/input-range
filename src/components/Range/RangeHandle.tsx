@@ -1,6 +1,6 @@
 import styles from "./Range.module.css";
 
-interface RangeHandleProps {
+export interface RangeHandleProps {
   percent: number;
   onDragStart: (e: React.MouseEvent | React.TouchEvent) => void;
   ariaLabel: string;
@@ -9,10 +9,10 @@ interface RangeHandleProps {
   ariaValueNow: number;
 }
 
-export default function RangeHandle(props: RangeHandleProps) {
+export function RangeHandle(props: RangeHandleProps) {
   return (
     <div
-      className={styles.handle}
+      className={styles.dragHandle}
       style={{ left: `${props.percent}%` }}
       onMouseDown={props.onDragStart}
       onTouchStart={props.onDragStart}
