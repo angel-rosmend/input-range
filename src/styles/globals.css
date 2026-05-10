@@ -9,3 +9,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+nav {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: black;
+  justify-content: space-between;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  margin-right: 16px;
+}
