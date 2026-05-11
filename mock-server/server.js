@@ -6,7 +6,7 @@ app.get('/range', (req, res) => {
   const mode = req.query.mode || 'normal';
    switch (mode) {
     case 'normal':
-      return res.json({ min: 1, max: 1000 });
+      return res.json({ min: 1, max: 10000 });
     case 'fixed':
      return res.json({ rangeValues: [1.99, 5.99, 10.99, 30.99, 50.99, 70.99] });
      default:
