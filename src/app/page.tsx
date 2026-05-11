@@ -1,14 +1,30 @@
-import { Range } from "@/components/Range/Range";
-import { RangeMode } from "@/types/range";
+import Link from "next/link";
+import styles from "../styles/common.module.css"
 
 export default function Home() {
-   const normalValues = [0, 100] as [number, number];
-   const fixedValues = [1.99, 5.99, 10.99, 30.99, 50.99, 70.99];
   return (
-    <main><h1>Input Range Setup</h1>
-    <Range mode={RangeMode.Normal} values={normalValues}/>
-    <Range mode={RangeMode.Fixed} values={fixedValues}/>
+    <main>
+      <div>
+        <h1>Prueba Técnica — Mango Range Component</h1>
+        <div className={styles.description}>
+          <p>
+            Un componente de rango (Range Slider) personalizado con dos modos de operación:
+          </p>
+          <ul style={{ marginTop: "12px", marginLeft: "20px" }}>
+            <li><strong>Modo Normal:</strong> Rango continuo con valores editables</li>
+            <li><strong>Modo Fijo:</strong> Selección de valores predefinidos con snap automático</li>
+          </ul>
+          <p style={{ marginTop: "12px" }}>
+            El componente incluye arrastre de manejadores (handles), etiquetas editables, retroalimentación visual y cumple con estándares de accesibilidad ARIA.
+          </p>
+        </div>
+      </div>
+
+      <div className={styles.navButtons}>
+        <Link href="/exercise-1">
+          <button>Ir a Ejercicio 1</button>
+        </Link>
+      </div>
     </main>
-   
   );
 }

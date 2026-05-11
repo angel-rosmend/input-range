@@ -4,6 +4,7 @@ import { RangeHandle } from "./RangeHandle";
 import { RangeLabel } from "./RangeLabel";
 import styles from "./Range.module.css";
 import { useRange } from "@/hooks/useRange";
+import { formatPercentage } from "@/utils/range";
 
 export function Range(props: RangeProps) {
   const {
@@ -59,8 +60,8 @@ export function Range(props: RangeProps) {
         <div
           className={styles.activeRange}
           style={{
-            left: `${minPercent}%`,
-            width: `${maxPercent - minPercent}%`,
+            left: formatPercentage(minPercent),
+            width: formatPercentage(maxPercent - minPercent),
           }}
         />
         <RangeHandle

@@ -1,0 +1,12 @@
+.description {
+  max-width: 600px;
+  line-height: 1.6;
+  color: #333;
+  font-size: 14px;
+}
+
+.navButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
