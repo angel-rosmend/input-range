@@ -31,12 +31,12 @@
     "ignoreDeprecations": "6.0"
   },
   "include": [
-    "next-env.d.ts",
+    "frontend/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "frontend/node_modules/jest.config.ts"  ],
   "exclude": [
     "node_modules"
   ]
