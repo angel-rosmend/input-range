@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Range } from "@/components/Range/Range";
 import { RangeMode } from "@/types/range";
-import styles from "./exercise.module.css";
+import styles from "../../styles/common.module.css";
 
 export default function Exercise1() {
   const normalValues = [1, 100] as [number, number];

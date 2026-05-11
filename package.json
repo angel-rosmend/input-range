@@ -1,0 +1,21 @@
+{
+  "name": "mango-range-challenge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mango Tech Challenge - Range Component with Mock Server",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:server": "cd mock-server && node server.js",
+    "build": "cd frontend && npm run build",
+    "test": "cd frontend && npm test",
+    "install:all": "npm install && cd frontend && npm install && cd .. && cd mock-server && npm install",
+    "clean": "rm -rf node_modules /*/node_modules /*/.next"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "apps/*"
+  ]
+}

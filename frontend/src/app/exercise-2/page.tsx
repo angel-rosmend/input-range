@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Range } from "@/components/Range/Range";
 import { RangeMode } from "@/types/range";
-import styles from "../../styles/exercise.module.css";
+import styles from "../../styles/common.module.css";
 
 export default function Exercise2() {
   const fixedValues = [1.99, 5.99, 10.99, 30.99, 50.99, 70.99];
