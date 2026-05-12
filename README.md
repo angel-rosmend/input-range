@@ -18,7 +18,7 @@ A monorepo containing a Next.js Range Component application and a mock API serve
 
 
 # 1 - Clone the repository
-```bas
+```bash
 git clone https://github.com/angel-rosmend/range-component.git
 cd mango-range-challenge
 ```
@@ -56,7 +56,7 @@ npm run dev:frontend
 
 ```bash
 npm test
-```bash
+```
 
 ## 📚 Documentation
 

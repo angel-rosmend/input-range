@@ -21,7 +21,7 @@ export async function fetchRangeData(mode: RangeMode) {
         throw new Error("Invalid mode");
     }
   } catch (error) {
-    console.log("error", error);
-    return error + " Error fetching data";
+    console.error("Failed to fetch range data:", error);
+    throw new Error("Failed to fetch range data");
   }
 }

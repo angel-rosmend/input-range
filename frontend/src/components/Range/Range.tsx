@@ -21,6 +21,7 @@ export function Range(props: RangeProps) {
     handleMinLabelConfirm,
     handleMaxDragStart,
     handleMinDragStart,
+    handleKeyDown,
     //states
     minInputValue,
     maxInputValue,
@@ -51,7 +52,9 @@ export function Range(props: RangeProps) {
       <div className={styles.track} ref={trackRef}>
         <RangeHandle
           percent={minPercent}
+          handleType="min"
           onDragStart={handleMinDragStart}
+          onKeyDown={handleKeyDown}
           ariaLabel="Minimum value"
           ariaValueNow={currentMin}
           ariaValueMin={initialMin}
@@ -66,7 +69,9 @@ export function Range(props: RangeProps) {
         />
         <RangeHandle
           percent={maxPercent}
+          handleType="max"
           onDragStart={handleMaxDragStart}
+          onKeyDown={handleKeyDown}
           ariaLabel="Maximum value"
           ariaValueNow={currentMax}
           ariaValueMin={currentMin}

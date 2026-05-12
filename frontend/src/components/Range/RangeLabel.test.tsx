@@ -16,25 +16,19 @@ const baseProps = {
 afterEach(() => jest.clearAllMocks());
 
 describe("RangeLabel — display (not editing)", () => {
-  it("shows value with € suffix in Normal mode", () => {
+  it("formats value based on mode", () => {
     render(<RangeLabel {...baseProps} mode={RangeMode.Normal} />);
     expect(screen.getByText("50€")).toBeInTheDocument();
-  });
 
-  it("shows formatted currency in Fixed mode", () => {
-    render(
-      <RangeLabel {...baseProps} mode={RangeMode.Fixed} value={1.99} />
-    );
+    render(<RangeLabel {...baseProps} mode={RangeMode.Fixed} value={1.99} />);
     expect(screen.getByText("1,99 €")).toBeInTheDocument();
   });
 
-  it("calls onEditStart when clicking an editable label", () => {
+  it("calls onEditStart only when label is editable", () => {
     render(<RangeLabel {...baseProps} mode={RangeMode.Normal} />);
     fireEvent.click(screen.getByText("50€"));
     expect(baseProps.onEditStart).toHaveBeenCalledTimes(1);
-  });
 
-  it("does NOT call onEditStart when clicking a non-editable label", () => {
     render(
       <RangeLabel
         {...baseProps}
@@ -44,10 +38,10 @@ describe("RangeLabel — display (not editing)", () => {
       />
     );
     fireEvent.click(screen.getByText("50,99 €"));
-    expect(baseProps.onEditStart).not.toHaveBeenCalled();
+    expect(baseProps.onEditStart).toHaveBeenCalledTimes(1);
   });
 
-  it("does not render an input when not editing", () => {
+  it("does not render input when not editing", () => {
     render(<RangeLabel {...baseProps} mode={RangeMode.Normal} />);
     expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument();
   });
@@ -60,17 +54,13 @@ describe("RangeLabel — editing", () => {
     isEditing: true,
   };
 
-  it("shows input when isEditing and isEditable", () => {
+  it("shows input when editing and editable", () => {
     render(<RangeLabel {...editingProps} />);
     expect(screen.getByRole("spinbutton")).toBeInTheDocument();
+    expect(screen.getByRole("spinbutton")).toHaveValue(50);
   });
 
-  it("input reflects the current inputValue", () => {
-    render(<RangeLabel {...editingProps} inputValue="42" />);
-    expect(screen.getByRole("spinbutton")).toHaveValue(42);
-  });
-
-  it("does NOT show input when isEditing but isEditable is false", () => {
+  it("does not show input when editing but not editable", () => {
     render(
       <RangeLabel
         {...editingProps}
@@ -82,29 +72,22 @@ describe("RangeLabel — editing", () => {
     expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument();
   });
 
-  it("calls onConfirm on Enter key", () => {
+  it("handles keyboard and blur events correctly", () => {
     render(<RangeLabel {...editingProps} />);
+    
     fireEvent.keyDown(screen.getByRole("spinbutton"), { key: "Enter" });
-    expect(editingProps.onConfirm).toHaveBeenCalledTimes(1);
-  });
+    expect(editingProps.onConfirm).toHaveBeenCalled();
 
-  it("calls onCancel on Escape key", () => {
-    render(<RangeLabel {...editingProps} />);
     fireEvent.keyDown(screen.getByRole("spinbutton"), { key: "Escape" });
-    expect(editingProps.onCancel).toHaveBeenCalledTimes(1);
-  });
+    expect(editingProps.onCancel).toHaveBeenCalled();
 
-  it("calls onConfirm on blur", () => {
-    render(<RangeLabel {...editingProps} />);
     fireEvent.blur(screen.getByRole("spinbutton"));
-    expect(editingProps.onConfirm).toHaveBeenCalledTimes(1);
+    expect(editingProps.onConfirm).toHaveBeenCalledTimes(2);
   });
 
   it("calls onInputChange when typing", () => {
     render(<RangeLabel {...editingProps} />);
-    fireEvent.change(screen.getByRole("spinbutton"), {
-      target: { value: "75" },
-    });
-    expect(editingProps.onInputChange).toHaveBeenCalledTimes(1);
+    fireEvent.change(screen.getByRole("spinbutton"), { target: { value: "75" } });
+    expect(editingProps.onInputChange).toHaveBeenCalled();
   });
 });

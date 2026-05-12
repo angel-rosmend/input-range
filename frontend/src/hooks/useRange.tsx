@@ -15,6 +15,7 @@ export function useRange(
   const [editActive, setEditActive] = useState<"min" | "max" | null>(null);
   const [minInputValue, setMinInputValue] = useState(String(initialMin));
   const [maxInputValue, setMaxInputValue] = useState(String(initialMax));
+  const [focusedHandle, setFocusedHandle] = useState<"min" | "max" | null>(null);
 
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -107,6 +108,61 @@ export function useRange(
     [],
   );
 
+  const handleKeyDown = useCallback(
+    (handleType: "min" | "max", e: React.KeyboardEvent) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+
+      if (mode === RangeMode.Normal) {
+        // Normal mode: increment/decrement by 1
+        const isIncrement = e.key === "ArrowRight";
+        const delta = isIncrement ? 1 : -1;
+
+        if (handleType === "min") {
+          const newMin = Math.max(
+            initialMin,
+            Math.min(currentMin + delta, currentMax),
+          );
+          setCurrentMin(newMin);
+          onChange?.(newMin, currentMax);
+        } else {
+          const newMax = Math.min(
+            initialMax,
+            Math.max(currentMax + delta, currentMin),
+          );
+          setCurrentMax(newMax);
+          onChange?.(currentMin, newMax);
+        }
+      } else if (mode === RangeMode.Fixed) {
+        // Fixed mode: move to next/prev value
+        const isNext = e.key === "ArrowRight";
+        const currentIndex =
+          handleType === "min"
+            ? values.indexOf(currentMin)
+            : values.indexOf(currentMax);
+
+        if (currentIndex === -1) return;
+
+        const newIndex = isNext
+          ? Math.min(currentIndex + 1, values.length - 1)
+          : Math.max(currentIndex - 1, 0);
+
+        const newValue = values[newIndex];
+
+        if (handleType === "min") {
+          const clamped = Math.min(newValue, currentMax);
+          setCurrentMin(clamped);
+          onChange?.(clamped, currentMax);
+        } else {
+          const clamped = Math.max(newValue, currentMin);
+          setCurrentMax(clamped);
+          onChange?.(currentMin, clamped);
+        }
+      }
+    },
+    [mode, values, initialMin, initialMax, currentMin, currentMax, onChange],
+  );
+
   useEffect(() => {
     if (!isDragging) return;
     document.addEventListener("mousemove", handleMouseMove);
@@ -160,14 +216,17 @@ export function useRange(
     handleMinLabelConfirm,
     handleMaxDragStart,
     handleMinDragStart,
+    handleKeyDown,
     //states
     minInputValue,
     maxInputValue,
     isDragging,
     editActive,
+    focusedHandle,
     setEditActive,
     setMinInputValue,
     setMaxInputValue,
+    setFocusedHandle,
     //refs
     trackRef,
   };
