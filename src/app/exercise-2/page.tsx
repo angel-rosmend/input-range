@@ -34,7 +34,7 @@ export default async function Exercise2() {
           <p>
             <strong>Modo Fijo:</strong> Selección entre 6 valores predefinidos (precios en €).
           </p>
-          <ul style={{ marginTop: "12px", marginLeft: "20px" }}>
+          <ul className={styles.descriptionList}>
             <li>Arrastra los manejadores para hacer snap a los valores disponibles</li>
             <li>Las etiquetas no son editables — son solo para visualizar</li>
             <li>Formatos de moneda (de-DE): 1.99€, 5.99€, 10.99€, 30.99€, 50.99€, 70.99€</li>

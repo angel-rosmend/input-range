@@ -10,11 +10,11 @@ export default function Home() {
           <p>
             Un componente de rango (Range Slider) personalizado con dos modos de operación:
           </p>
-          <ul style={{ marginTop: "12px", marginLeft: "20px" }}>
+          <ul className={styles.descriptionList}>
             <li><strong>Modo Normal:</strong> Rango continuo con valores editables</li>
             <li><strong>Modo Fijo:</strong> Selección de valores predefinidos con snap automático</li>
           </ul>
-          <p style={{ marginTop: "12px" }}>
+          <p>
             El componente incluye arrastre de manejadores (handles), etiquetas editables, retroalimentación visual y cumple con estándares de accesibilidad ARIA.
           </p>
         </div>

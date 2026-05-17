@@ -5,6 +5,11 @@
   font-size: 14px;
 }
 
+.descriptionList {
+  margin-top: 12px;
+  margin-left: 20px;
+}
+
 .navButtons {
   display: flex;
   gap: 12px;

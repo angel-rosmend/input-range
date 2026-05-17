@@ -32,7 +32,7 @@ export default async function Exercise1() {
           <p>
             <strong>Modo Normal:</strong> Rango continuo de 1 a 100.
           </p>
-          <ul style={{ marginTop: "12px", marginLeft: "20px" }}>
+          <ul className={styles.descriptionList}>
             <li>Arrastra los manejadores para seleccionar un rango</li>
             <li>Haz clic en los valores para editarlos directamente</li>
             <li>Los valores no pueden cruzarse ni exceder los límites</li>

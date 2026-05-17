@@ -23,34 +23,22 @@ git clone https://github.com/angel-rosmend/range-component.git
 cd mango-range-challenge
 ```
 
-# 2 - Install all dependencies (root + both apps)
+# 2 - Install dependencies
 ```bash
-npm run install:all
+npm run install
 ```
 
 ### 3 -  Running the Project
 
-**Option 1: Run both apps together (Recommended)**
+**Option 1: Run App **
 
 ```bash
 npm run dev
 ```
 
 This will start:
-- Mock server on http://localhost:4000
+
 - Next.js app on http://localhost:8080
-
-**Option 2: Run apps separately**
-
-# Terminal 1 - Mock Server
-```bash
-npm run dev:server
-```
-
-# Terminal 2 - Frontend
-```bash
-npm run dev:frontend
-```
 
 ### Running Tests
 
@@ -58,26 +46,23 @@ npm run dev:frontend
 npm test
 ```
 
-## 📚 Documentation
-
-- [Frontend Documentation](./apps/frontend/README.md)
 
 ## 🛠️ Available Scripts
 
 - `npm run dev` - Run both apps concurrently
-- `npm run dev:frontend` - Run only the Next.js app
-- `npm run dev:server` - Run only the mock server
 - `npm run build` - Build the frontend for production
 - `npm test` - Run frontend tests
-- `npm run install:all` - Install dependencies for all apps
+- `npm run install` - Install dependencies for all apps
 - `npm run clean` - Remove all node_modules and build artifacts
 
 ## 🌐 API Endpoints
 
-The mock server provides:
+This project uses **mockable.io** for mocking API responses. Mockable.io is a service that allows you to create fake HTTP endpoints without writing a backend server. The Range component fetches data from mocked endpoints to simulate loading range configuration (normal vs fixed mode) with proper error handling and loading states.
 
-- `GET http://localhost:4000/range?mode=normal` - Normal range data
-- `GET http://localhost:4000/range?mode=fixed` - Fixed range values
+Available mock endpoints:
+
+- `GET http://localhost:8080/api/range?mode=normal` - Normal range data
+- `GET http://localhost:8080/api/range?mode=fixed` - Fixed range values
 
 ## 📝 License
 
