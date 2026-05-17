@@ -9,7 +9,8 @@ export default async function Exercise2() {
   
   const data = await fetchRangeData(RangeMode.Fixed) as FixedRangeType
 
-  const fixedValues = data.rangeValues 
+  const fixedValues = data.rangeValues;
+
   if(!data || !data.rangeValues) {
     return (
       <main>
@@ -35,8 +36,8 @@ export default async function Exercise2() {
           </p>
           <ul style={{ marginTop: "12px", marginLeft: "20px" }}>
             <li>Arrastra los manejadores para hacer snap a los valores disponibles</li>
-            <li>Las etiquetas NO son editables — son solo para visualizar</li>
-            <li>Formatos de moneda (de-DE): 1.99€, 5.99€, 10.99€, 30.99€, 50.99€, 70.99€ (con coma decimal)</li>
+            <li>Las etiquetas no son editables — son solo para visualizar</li>
+            <li>Formatos de moneda (de-DE): 1.99€, 5.99€, 10.99€, 30.99€, 50.99€, 70.99€</li>
           </ul>
         </div>
       </div>
