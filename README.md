@@ -18,7 +18,7 @@ git clone https://github.com/angel-rosmend/range-component.git
 ```
 
 ```bash
-cd mango-range-challenge
+cd input-range
 ```
 
 # 2 - Install dependencies
