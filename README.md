@@ -1,11 +1,6 @@
 # Mango Range Challenge
 
-A monorepo containing a Next.js Range Component application and a mock API server.
-
-## 📦 Project Structure
-
-- `/frontend` - Next.js application with Range component
-- `/mock-server` - Express mock API server
+A monorepo containing a Next.js Range Component application
 
 ## 🚀 Quick Start
 
@@ -20,6 +15,9 @@ A monorepo containing a Next.js Range Component application and a mock API serve
 # 1 - Clone the repository
 ```bash
 git clone https://github.com/angel-rosmend/range-component.git
+```
+
+```bash
 cd mango-range-challenge
 ```
 
